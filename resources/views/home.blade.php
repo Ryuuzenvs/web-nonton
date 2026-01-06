@@ -1,3 +1,6 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <link href="{{ asset('bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('all.min.css') }}" rel="stylesheet">
 <link href="{{ asset('aniel.css') }}" rel="stylesheet">
@@ -12,60 +15,210 @@ background:  url('{{ asset('bg.webp') }}') no-repeat fixed; /* Tambahkan ini */
         color: white;
 background-size: cover;
     }
+.sunset-card {
+    /* Gradient Sunset: Jingga ke Pink ke Ungu */
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.4), rgba(255, 20, 147, 0.3), rgba(138, 43, 226, 0.3)) !important;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
 
+/* Efek cahaya matahari kecil di pojok card */
+.sunset-card::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    filter: blur(20px);
+    border-radius: 50%;
+}
+
+.sunset-card:hover {
+    transform: scale(1.02);
+    transition: 0.3s;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+@media (max-width: 576px) {
+    .headline-text {
+        font-size: 2.5rem !important; /* Ukuran font lebih proporsional di HP */
+    }
+    .small-mobile-text {
+        font-size: 0.9rem !important;
+    }
+    .profile-img {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    .sunset-card {
+        margin-top: -10px; /* Merapatkan jarak dengan headline di mobile */
+    }
+}
+
+/* Biar tulisan RYUUNIME ada efek cahaya biru */
+.headline-text {
+    text-shadow: 0 0 20px rgba(13, 110, 253, 0.6);
+}
 </style>
 
+<div class="container mt-4">
+    <div class="row align-items-center g-3 mb-5">
+        <div class="col-12 col-md-7 text-start">
+            <h1 class="display-4 fw-bold text-white mb-0 headline-text">
+                RYUUNIME
+            </h1>
+            <p class="lead text-info small-mobile-text">Streaming Anime Lokal Tanpa Iklan</p>
+        </div>
 
-<div class="container mt-5">
-<div class="highlight-section mb-5">
-    <h4 class="mb-3"><i data-feather="zap" class="text-warning"></i> Rekomendasi Hari Ini</h4>
-    <div class="d-flex flex-nowrap overflow-auto pb-3" style="gap: 15px; scrollbar-width: thin;">
-        @foreach($highlights as $h)
-            @if($h->highlight_video)
-            <div class="card bg-dark text-white border-primary" style="min-width: 300px; max-width: 300px;">
-                <div class="position-relative">
-                    <video width="100%" height="170" style="object-fit: cover;" muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                        <source src="{{ asset('anime/' . $h->folder_name . '/' . $h->highlight_video . '#t=30') }}" type="video/mp4">
-                    </video>
-                    <div class="position-absolute bottom-0 start-0 p-2 w-100" style="background: linear-gradient(transparent, rgba(0,0,0,0.8));">
-                        <small class="d-block text-truncate">{{ $h->title ?? $h->folder_name }}</small>
+        <div class="col-12 col-md-5">
+            <div class="sunset-card p-2 p-md-3 shadow-lg">
+                <div class="d-flex align-items-center">
+                    <img src="{{ asset('ppgt.webp') }}" class="rounded-circle border border-2 border-white me-2 me-md-3 profile-img" width="50" height="50">
+                    <div class="overflow-hidden">
+                        <h6 class="mb-0 fw-bold text-white text-truncate">ryuuzenvs</h6>
+                        <a href="https://ryuu.page.gd" target="_blank" class="text-white-50 small text-decoration-none d-block text-truncate" style="font-size: 0.7rem;">
+                            <i data-feather="globe" width="10"></i> ryuu.page.gd
+                        </a>
+                        <div class="mt-1">
+                            <a href="https://github.com/ryuuzenvs" target="_blank" class="btn btn-primary btn-sm py-0 px-2" style="font-size: 0.65rem; height: 20px; line-height: 18px;">
+                                <i data-feather="github" width="10"></i> Follow
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body p-2 d-flex justify-content-between align-items-center">
-    <span class="small text-info">Episode {{ $h->highlight_eps }}</span>
-    
-    <a href="{{ route('anime.watch', [$h->folder_name, $h->highlight_eps]) }}" class="btn btn-primary btn-sm">
-    <i data-feather="play-circle"></i> Tonton
-</a>
-</div>
             </div>
+        </div>
+    </div>
+
+
+<div class="container mt-4">
+    <div class="highlight-section mb-5">
+        <h4 class="mb-3"><i data-feather="star" class="text-warning"></i> Rekomendasi</h4>
+        <div class="d-flex flex-nowrap overflow-auto pb-3" style="gap: 15px; scrollbar-width: none;">
+<div class="d-flex flex-nowrap overflow-auto pb-3" style="gap: 15px; scrollbar-width: thin;">
+
+        @foreach($highlights as $h)
+
+            @if($h->highlight_video)
+
+            <div class="card bg-dark text-white border-primary" style="min-width: 300px; max-width: 300px;">
+
+                <div class="position-relative">
+
+                    <video width="100%" height="170" style="object-fit: cover;" muted loop onmouseover="this.play()" onmouseout="this.pause()">
+
+                        <source src="{{ asset('anime/' . $h->folder_name . '/' . $h->highlight_video . '#t=30') }}" type="video/mp4">
+
+                    </video>
+
+                    <div class="position-absolute bottom-0 start-0 p-2 w-100" style="background: linear-gradient(transparent, rgba(0,0,0,0.8));">
+
+                        <small class="d-block text-truncate">{{ $h->title ?? $h->folder_name }}</small>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body p-2 d-flex justify-content-between align-items-center">
+
+    <span class="small text-info">Episode {{ $h->highlight_eps }}</span>
+
+    
+
+    <a href="{{ route('anime.watch', [$h->folder_name, $h->highlight_eps]) }}" class="btn btn-primary btn-sm">
+
+    <i data-feather="play-circle"></i> Tonton
+
+</a>
+
+</div>
+
+            </div>
+
             @endif
+
+        @endforeach 
+            </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Koleksi Anime</h4>
+        <a href="{{ route('anime.sync') }}" class="btn btn-success btn-sm">
+            <i data-feather="refresh-cw" width="14"></i> Scan
+        </a>
+    </div>
+
+    <div class="collapse d-md-block mb-4" id="searchBar">
+        <form action="/" method="GET">
+            <input type="text" name="search" class="form-control bg-dark text-white border-secondary" placeholder="Cari anime...">
+        </form>
+    </div>
+
+    <div class="row g-3"> @foreach($animes as $a)
+        <div class="col-6 col-md-4 col-lg-3 mb-3">
+            <div class="card text-white anime-card-effect h-100 border-0"> 
+                <div class="card-body d-flex flex-column justify-content-between p-3">
+                    <div>
+                        <h6 class="fw-bold mb-1 text-truncate">{{ $a->title ?? $a->folder_name }}</h6>
+                        <p class="small text-warning mb-2" style="font-size: 0.7rem;">{{ $a->max_eps }} Episodes</p>
+                    </div>
+                    <a href="{{ route('anime.detail', $a->folder_name) }}" class="btn btn-primary btn-sm w-100">
+                        <i data-feather="play" width="12"></i> Buka
+                    </a>
+                </div>
+            </div>
+        </div>
         @endforeach
     </div>
 </div>
-    <h2>Daftar Anime Lokal <a href="{{ route('anime.sync') }}" class="btn btn-success custom-btn-icon">
-<i data-feather="refresh-cw" width="16" height="16"></i>
-            <span class="btn-text">. Scan Folder Baru</span>
-</a></h2>
-    <form action="/" method="GET" class="mb-4">
-        <input type="text" name="search" class="form-control" placeholder="Cari nama anime alias...">
-    </form>
 
-<div class="row">
-    @foreach($animes as $a)
-<div class="col-md-3 mb-3">
-    <div class="card text-white anime-card-effect bg-transparent"> <div class="card-body">
-            <h5>{{ $a->title ?? $a->folder_name }}</h5>
-            <p class="small text-warning">{{ $a->title ? '' : $a->folder_name }}</p>
-            <p>Total: {{ $a->max_eps }} Eps</p>
-            <a href="{{ route('anime.detail', $a->folder_name) }}" class="btn btn-primary btn-sm custom-btn-icon">
-    <i data-feather="play" width="14" height="14"></i><span class="btn-text">Buka</span> </a>
-        </div>
-    </div>
-</div>
-@endforeach
-</div>
 <script>
     // Inisialisasi Feather Icons
     feather.replace();
 </script>
+
+<style>
+    .waifu-container {
+        position: fixed;
+        bottom: 0;
+        left: 20px;
+        z-index: 999;
+        display: flex;
+        align-items: flex-end;
+        pointer-events: none; /* Biar gak ganggu klik di belakangnya */
+    }
+    .waifu-img {
+        width: 180px; /* Sesuaikan ukuran waifu kamu */
+        filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+        animation: float 3s ease-in-out infinite;
+    }
+    .waifu-bubble {
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+        padding: 10px 15px;
+        border-radius: 15px 15px 15px 0;
+        margin-bottom: 120px;
+        margin-left: -20px;
+        max-width: 200px;
+        font-size: 0.9rem;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        backdrop-filter: blur(5px);
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+</style>
+
+<div class="waifu-container">
+    <img src="{{ asset('waifu/' . $waifuIndex . '.png') }}" class="waifu-img">
+    <div class="waifu-bubble">
+        <strong>Waifu-chan:</strong><br>
+        "{{ $waifuDialog }}"
+    </div>
+</div>

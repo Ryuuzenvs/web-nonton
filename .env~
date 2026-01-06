@@ -7,8 +7,8 @@ APP_DEBUG=true
 #APP_URL=http://10.235.237.17:8000
 #APP_URL=http://10.202.249.190:8000
 #APP_URL=http://10.202.249.225:8000
-APP_URL=http://127.0.0.1:8000
-#APP_URL=http://10.202.249.56:8000
+#APP_URL=http://127.0.0.1:8000
+APP_URL=http://10.202.249.56:800
 
 #APP_URL=http://localhost/www/web-nonton/public
 

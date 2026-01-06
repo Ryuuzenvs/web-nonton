@@ -88,8 +88,25 @@ class AnimeController extends Controller
             return $q->where('title', 'like', "%$query%")
                 ->orWhere('folder_name', 'like', "%$query%");
         })->get();
+         
+        // Fitur Waifu Sambut Ver 1.3
+    $waifuIndex = rand(1, 3); // Karena ada 3 gambar (1.png, 2.png, 3.png)
+    
+    $dialogs = [
+        "Ohayou, Onii-chan! Sudah siap maraton anime hari ini?",
+        "Okaerinasai! Mau lanjut nonton episode yang mana?",
+        "Yahalloo~! Ada banyak anime seru yang nungguin kamu nih.",
+        "Otsukare-sama! Istirahat dulu yuk sambil nonton.",
+        "Konbanwa! Jangan nonton kemalaman ya, kesehatanmu penting!",
+        "Mata aeta ne! Aku senang kamu mampir ke sini lagi.",
+        "Nani miteru no? Semoga ketemu anime yang cocok ya!",
+        "Ganbare! Aku akan selalu menemanimu di sini.",
+        "Tadaima? Eh salah, maksudnya Okaeri! Hehe.",
+        "Sa, ikou! Ayo mulai nontonnya sekarang!"
+    ];
+    $waifuDialog = $dialogs[array_rand($dialogs)];
 
-        return view('home', compact('highlights', 'animes'));
+return view('home', compact('highlights', 'animes', 'waifuIndex', 'waifuDialog'));
     }
 
     public function show($folder_name)
