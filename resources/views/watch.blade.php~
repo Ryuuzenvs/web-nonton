@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{{ asset('bootstrap.min.css') }}" rel="stylesheet">
+    <title>Nonton {{ $anime->title }} - Eps {{ $eps }}</title>
+    <style>
+        body { background-color: #121212; color: white; }
+        .video-container { max-width: 900px; margin: auto; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="video-container">
+            <a href="{{ route('anime.detail', $anime->folder_name) }}" class="btn btn-sm btn-outline-light mb-3">← Kembali ke Daftar Episode</a>
+            
+            <h3 class="mb-3">{{ $anime->title }} - Episode {{ $eps }}</h3>
+
+            <div class="ratio ratio-16x9 shadow-lg bg-black">
+                <video controls autoplay>
+                    <source src="{{ asset('anime/' . $anime->folder_name . '/' . $video_file) }}" type="video/mp4">
+                    Browser kamu tidak mendukung tag video.
+                </video>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                @if($eps > 1)
+<a href="{{ route('play', [$anime->folder_name, $eps - 1]) }}" class="btn btn-primary">prev </a>
+                @else
+                    <div></div> @endif
+
+                @if($eps < $anime->max_eps)
+<a href="{{ route('play', [$anime->folder_name, $eps + 1]) }}" class="btn btn-primary">Next »</a>
+                @endif
+            </div>
+        </div>
+    </div>
+</body>
+</html>
