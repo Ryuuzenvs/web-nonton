@@ -39,5 +39,15 @@
 </div>
         </div>
     </div>
+<script>
+    const video = document.querySelector('video');
+    video.onended = function() {
+        @if($eps < $anime->max_eps)
+            window.location.href = "{{ route('anime.watch', [$anime->folder_name, $eps + 1]) }}";
+        @else
+            alert('Series Selesai!');
+        @endif
+    };
+</script>
 </body>
 </html>

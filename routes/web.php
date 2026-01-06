@@ -14,5 +14,6 @@ Route::get('/show/{folder_name}', [AnimeController::class, 'show'])->name('anime
 // Halaman Video Player (Prefix: play)
 Route::get('/play/{folder_name}/{eps}', [AnimeController::class, 'watch'])->name('anime.watch');
 
-
 Route::get('/sync', [AnimeController::class, 'sync'])->name('anime.sync');
+
+Route::get('/video-stream/{folder}/{file}', [AnimeController::class, 'streamVideo'])->name('video.stream');

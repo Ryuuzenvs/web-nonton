@@ -16,10 +16,16 @@
             <h3 class="mb-3">{{ $anime->title }} - Episode {{ $eps }}</h3>
 
             <div class="ratio ratio-16x9 shadow-lg bg-black">
-                <video controls autoplay>
-                    <source src="{{ asset('anime/' . $anime->folder_name . '/' . $video_file) }}" type="video/mp4">
-                    Browser kamu tidak mendukung tag video.
-                </video>
+                <video width="100%" controls autoplay>
+    {{-- CARA BARU: Support Timeline (Gunakan ini untuk tes) --}}
+    <source src="{{ route('video.stream', [$anime->folder_name, $video_file]) }}" type="video/mp4">
+
+    {{-- CARA LAMA: Langsung ke file (Komentari ini agar tidak bentrok)
+    <source src="{{ asset('anime/' . $anime->folder_name . '/' . $video_file) }}" type="video/mp4"> 
+    --}}
+
+    Browser tidak mendukung video.
+</video>
             </div>
 
             <div class="navigation-buttons mt-4">

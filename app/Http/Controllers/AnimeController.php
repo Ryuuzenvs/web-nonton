@@ -8,6 +8,53 @@ use Illuminate\Support\Facades\File;
 
 class AnimeController extends Controller
 {
+    public function streamVideo($folder, $file)
+{
+    $path = public_path("anime/{$folder}/{$file}");
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    $size = filesize($path);
+    $length = $size;
+    $start = 0;
+    $end = $size - 1;
+
+    $type = 'video/mp4';
+    $headers = [
+        'Content-Type' => $type,
+        'Accept-Ranges' => 'bytes',
+    ];
+
+    if (request()->hasHeader('Range')) {
+        $range = request()->header('Range');
+        list(, $range) = explode('=', $range, 2);
+        if (strpos($range, ',') !== false) {
+            abort(416);
+        }
+        if ($range == '-') {
+            $range = "0-$end";
+        }
+        $range = explode('-', $range);
+        $start = (int)$range[0];
+        $end = (isset($range[1]) && is_numeric($range[1])) ? (int)$range[1] : $size - 1;
+
+        $length = $end - $start + 1;
+        $headers['Content-Range'] = "bytes $start-$end/$size";
+        $headers['Content-Length'] = $length;
+
+        return response()->stream(function () use ($path, $start, $length) {
+            $stream = fopen($path, 'rb');
+            fseek($stream, $start);
+            echo fread($stream, $length);
+            fclose($stream);
+        }, 206, $headers);
+    }
+
+    $headers['Content-Length'] = $size;
+    return response()->file($path, $headers);
+}
     public function index(Request $request)
     {
         // 1. Ambil semua anime dari database
