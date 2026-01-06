@@ -22,17 +22,32 @@
                 </video>
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
-                @if($eps > 1)
-<a href="{{ route('watch', [$anime->folder_name, $eps - 1]) }}" class="btn btn-primary">prev </a>
-                @else
-                    <div></div> @endif
+            <div class="navigation-buttons mt-4">
+    {{-- Tombol Prev --}}
+    @if($eps > 1)
+        <a href="{{ route('anime.watch', [$anime->folder_name, $eps - 1]) }}" class="btn btn-primary">
+            « Previous
+        </a>
+    @endif
 
-                @if($eps < $anime->max_eps)
-<a href="{{ route('watch', [$anime->folder_name, $eps + 1]) }}" class="btn btn-primary">Next »</a>
-                @endif
-            </div>
+    {{-- Tombol Next --}}
+    @if($eps < $anime->max_eps)
+        <a href="{{ route('anime.watch', [$anime->folder_name, $eps + 1]) }}" class="btn btn-primary">
+            Next »
+        </a>
+    @endif
+</div>
         </div>
     </div>
+<script>
+    const video = document.querySelector('video');
+    video.onended = function() {
+        @if($eps < $anime->max_eps)
+            window.location.href = "{{ route('anime.watch', [$anime->folder_name, $eps + 1]) }}";
+        @else
+            alert('Series Selesai!');
+        @endif
+    };
+</script>
 </body>
 </html>

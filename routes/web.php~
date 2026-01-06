@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimeController;
 use Illuminate\Support\Facades\Route;
 
+
 // Halaman utama
 // Home
 Route::get('/', [AnimeController::class, 'index'])->name('home');

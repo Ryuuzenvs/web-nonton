@@ -12,7 +12,7 @@ Route::get('/', [AnimeController::class, 'index'])->name('home');
 Route::get('/show/{folder_name}', [AnimeController::class, 'show'])->name('anime.detail');
 
 // Halaman Video Player (Prefix: play)
-Route::get('/play/{folder_name}/{eps}', [AnimeController::class, 'watch'])->name('watch');
+Route::get('/play/{folder_name}/{eps}', [AnimeController::class, 'watch'])->name('anime.watch');
 
 
 Route::get('/sync', [AnimeController::class, 'sync'])->name('anime.sync');

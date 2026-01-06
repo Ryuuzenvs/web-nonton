@@ -1,26 +1,51 @@
 .anime-card-effect {
-    position: relative; /* Penting untuk posisi ::before */
-    overflow: hidden; /* Agar efek berkilau tidak keluar dari kartu */
-    transition: transform 0.3s ease-in-out; /* Animasi zoom ringan */
+    position: relative; /* Penting agar ::before bisa nempel */
+    overflow: hidden; /* Agar kilauan tidak tumpah keluar */
+    background: rgba(255, 255, 255, 0.05) !important;
+    
+    /* Tambahkan ini: Pastikan tidak ada warna solid yang menutupi */
+    backdrop-filter: blur(12px) saturate(150%); 
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    z-index: 1; /* Pastikan kartu punya konteks tumpukan */
 }
 
 .anime-card-effect:hover {
-    transform: translateY(-5px); /* Sedikit naik saat di-hover */
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Perbaikan Elemen Kilauan */
 .anime-card-effect::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -75%; /* Mulai dari kiri luar */
+    left: -100%; /* Mulai lebih jauh ke kiri */
     width: 50%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Warna kilau */
-    transform: skewX(-20deg); /* Miringkan */
-    transition: all 0.7s ease-in-out; /* Animasi pergerakan */
-    z-index: 1; /* Pastikan di atas konten kartu */
+    /* Gunakan gradient agar kilauannya halus (fade out di pinggir) */
+    background: linear-gradient(
+        to right, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: 0.6s;
+    z-index: 2; /* Di atas background kartu */
+    pointer-events: none; /* Agar kilauan tidak menghalangi klik tombol */
 }
 
 .anime-card-effect:hover::before {
-    left: 125%; /* Bergerak ke kanan luar */
+    left: 150%;
+}
+
+/* Pastikan konten kartu di atas kilauan agar teks tidak ikut putih saat lewat */
+.card-body {
+    position: relative;
+    z-index: 3;
 }
