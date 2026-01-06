@@ -1,0 +1,39 @@
+.custom-btn-icon {
+    position: relative;
+    overflow: hidden;
+    padding: 0.5rem 1rem; /* Padding awal untuk ikon saja */
+    width: auto; /* Agar tidak terlalu lebar */
+    transition: all 0.3s ease-in-out;
+    display: inline-flex; /* Agar ikon dan teks sejajar */
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-btn-icon .fa-solid,
+.custom-btn-icon .fas { /* Untuk ikon Font Awesome */
+    transition: margin-right 0.3s ease-in-out;
+}
+
+.custom-btn-icon .btn-text {
+    position: absolute;
+    left: 100%; /* Sembunyikan teks di luar tombol */
+    opacity: 0;
+    white-space: nowrap; /* Jangan putus baris */
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-btn-icon:hover {
+    padding-left: 0.75rem; /* Sesuaikan padding saat di-hover */
+    padding-right: 1.5rem; /* Sesuaikan padding saat di-hover */
+}
+
+.custom-btn-icon:hover .fa-solid,
+.custom-btn-icon:hover .fas {
+    margin-right: 0.5rem; /* Beri jarak antara ikon dan teks */
+}
+
+.custom-btn-icon:hover .btn-text {
+    position: static; /* Tampilkan teks di posisi normal */
+    left: auto;
+    opacity: 1;
+}
